@@ -1,0 +1,15 @@
+h1, h2 {
+  font-family: Lato;
+}
+input {
+  border :none;
+}
+span{
+  background: rgba(102, 153, 255, 0.2);
+  border-radius: 100px;
+  padding:3px 10px;
+  margin:0 3px;  
+}
+span i{
+  cursor: pointer
+}
