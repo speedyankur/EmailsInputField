@@ -51,6 +51,9 @@ export class EmailsInput{
       return;
     const addressSpan:HTMLElement = document.createElement("span");
     addressSpan.innerHTML=value;
+    const isValidEmail = this.isValidEmail(value);
+    if(!isValidEmail)
+      addressSpan.className="invalid";
     const del:HTMLElement = document.createElement("i");
     del.innerHTML=" X"
     del.addEventListener('click',()=>{
@@ -64,4 +67,9 @@ export class EmailsInput{
     this.addresses.push(value);
     console.log(this.addresses);
   }
+  private isValidEmail(value:string):boolean{
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(value.toLowerCase());  
+  }
+    
 }
