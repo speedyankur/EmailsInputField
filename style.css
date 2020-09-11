@@ -1,9 +1,3 @@
-h1, h2 {
-  font-family: Lato;
-}
-body{
-  background: green;
-}
 input {
   border :none;
 }
@@ -13,6 +7,7 @@ input {
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);  
 }
 .emails-input__header{
+  border-radius: 8px;
   font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
