@@ -3,19 +3,52 @@ export interface Options{
   headerLabel:string,
   placeHolderText:string,
 }
+interface Address{
+  id:number;
+  isValidEmail:boolean;
+  value:string
+}
+class AddressBook{
+  private counter=0;
+  private addresses:Array<Address>=[];
+  public add(value:string):Address{
+    const isValidEmail = this.isValidEmail(value);
+    const address:Address={
+      id:this.counter,
+      value,
+      isValidEmail
+    }
+    this.addresses.push(address);
+    this.counter++;
+    return address;
+  }
+  public remove(id:number):Address{
+    const index = this.addresses.findIndex(add=>add.id===id);
+    if(index>-1){
+      return this.addresses.splice(index,1)[0];
+    }else{
+      return null;
+    }
+  }
+  public getCountOfValidEmails():number{    
+    return this.addresses.filter(address=>address.isValidEmail).length
+  }
+  private isValidEmail(value:string):boolean{
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(value.toLowerCase());  
+  }  
+}
 export class EmailsInput{
   private el:HTMLElement;
   private options:Options;
   private input:HTMLInputElement; 
   private body:HTMLElement 
-  private addresses:Array<string>=[];
+  private addressesBook:AddressBook = new AddressBook();
   constructor(_el:HTMLElement,_options:Options){
     this.el=_el;
     this.el.className="emails-input";
     this.options=_options;
-    console.log("creating a new EmailsInput");
-    this.setupFormField()
-    
+    this.setupFormField()    
     this.handleEvents();
   }
   private setupFormField(){
@@ -37,7 +70,7 @@ export class EmailsInput{
     this.body = document.createElement("div"); 
     this.body.className='emails-input__body';    
     this.input = document.createElement("input");
-    this.input.type="text";
+    this.input.type="email";
     this.input.placeholder=this.options.placeHolderText;
     this.body.append(this.input)
   }
@@ -47,19 +80,27 @@ export class EmailsInput{
     const randomEmailGen = document.createElement("button");
     randomEmailGen.innerHTML="Add email";
     randomEmailGen.addEventListener('click',()=>{
-      this.addNewAddress("test");
+      const chars = 'abcdefghijklmnopqrstuvwxyz'
+      const randomEmail= chars[Math.floor(Math.random()*26)] 
+                  + Math.random().toString(36).substring(2,11) 
+                  + '@random.com';
+      this.addNewAddress(randomEmail);
     })
     footer.append(randomEmailGen);
 
     const counter = document.createElement("button");
     counter.addEventListener('click',()=>{
-      alert(this.addresses.length);
+      alert(this.addressesBook.getCountOfValidEmails());
     })    
     counter.innerHTML="Get emails count";
     footer.append(counter);    
     return footer
   }  
   private handleEvents(){
+    this.body.addEventListener('click',(e)=>{
+      console.log("handling body click events");
+      this.input.focus();
+    })
     this.input.addEventListener('blur',(e)=>{
       this.addNewAddress(this.input.value)
       this.input.value="";
@@ -87,27 +128,25 @@ export class EmailsInput{
   private addNewAddress(value:string){
     if(value==="")
       return;
+    const addObj = this.addressesBook.add(value);        
     const addressSpan:HTMLElement = document.createElement("span");
     addressSpan.innerHTML=value;
-    const isValidEmail = this.isValidEmail(value);
-    if(!isValidEmail)
+    addressSpan.attributes['data-id']=addObj.id;
+    if(!addObj.isValidEmail)
       addressSpan.className="invalid";
     const del:HTMLElement = document.createElement("i");
-    del.innerHTML=" X"
-    del.addEventListener('click',()=>{
-      const addressIndex = this.addresses.indexOf(value);
-      this.addresses.splice(addressIndex,1);
-      addressSpan.remove();
-      console.log(this.addresses);
+    del.innerHTML=" X";
+    del.attributes['data-id']=addObj.id;
+    del.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      const delEl = <HTMLElement>e.target;      
+      const deletedAddress = this.addressesBook.remove(delEl.attributes['data-id']);
+      if(deletedAddress){
+        addressSpan.remove();
+      }
     })
     addressSpan.append(del);
     this.body.insertBefore(addressSpan,this.input);
-    this.addresses.push(value);
-    console.log(this.addresses);
-  }
-  private isValidEmail(value:string):boolean{
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return regex.test(value.toLowerCase());  
   }
     
 }
