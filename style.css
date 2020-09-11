@@ -25,6 +25,20 @@ input {
   background: #F8F8F7;
   padding: 20px;
 }
+.emails-input__bottom{
+  padding: 20px;
+}
+.emails-input__bottom button{
+  background: #4262FF;
+  border-radius: 6px; 
+  padding : 8px 16px;
+  margin-right: 16px; 
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  color: #FFFFFF;
+  border-style:none;
+}
 .emails-input__body{
   height:75px;
   overflow-y: auto;

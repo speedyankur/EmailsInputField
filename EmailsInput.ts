@@ -22,9 +22,10 @@ export class EmailsInput{
     const top:HTMLElement = document.createElement("div"); 
     top.className='emails-input__top';
     top.append(this.createHeader())
-    this.createInput();
-    top.append(this.body)
+    this.createBody();
+    top.append(this.body)    
     this.el.append(top)
+    this.el.append(this.createActionBar())
   } 
   private createHeader(): HTMLElement{
     const header:HTMLElement = document.createElement("div"); 
@@ -32,7 +33,7 @@ export class EmailsInput{
     header.className='emails-input__header';
     return header; 
   }
-  private createInput(){
+  private createBody(){
     this.body = document.createElement("div"); 
     this.body.className='emails-input__body';    
     this.input = document.createElement("input");
@@ -40,6 +41,24 @@ export class EmailsInput{
     this.input.placeholder=this.options.placeHolderText;
     this.body.append(this.input)
   }
+  private createActionBar(): HTMLElement{
+    const footer = document.createElement("div"); 
+    footer.className='emails-input__bottom';    
+    const randomEmailGen = document.createElement("button");
+    randomEmailGen.innerHTML="Add email";
+    randomEmailGen.addEventListener('click',()=>{
+      this.addNewAddress("test");
+    })
+    footer.append(randomEmailGen);
+
+    const counter = document.createElement("button");
+    counter.addEventListener('click',()=>{
+      alert(this.addresses.length);
+    })    
+    counter.innerHTML="Get emails count";
+    footer.append(counter);    
+    return footer
+  }  
   private handleEvents(){
     this.input.addEventListener('blur',(e)=>{
       this.addNewAddress(this.input.value)
