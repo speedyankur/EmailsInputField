@@ -7,6 +7,7 @@ const el1: HTMLElement = document.querySelector('#emails-input1');
 
 const options: Options ={
   delimiter:",",
+  headerLabel:"Share Board name with others",
   placeHolderText:"add emails.."
 }
 

@@ -1,25 +1,44 @@
 export interface Options{
   delimiter:string,
+  headerLabel:string,
   placeHolderText:string,
 }
 export class EmailsInput{
   private el:HTMLElement;
   private options:Options;
-  private input:HTMLInputElement;  
+  private input:HTMLInputElement; 
+  private body:HTMLElement 
   private addresses:Array<string>=[];
   constructor(_el:HTMLElement,_options:Options){
     this.el=_el;
+    this.el.className="emails-input";
     this.options=_options;
     console.log("creating a new EmailsInput");
-    this.input = this.createInput();
+    this.setupFormField()
+    
     this.handleEvents();
-    this.el.append(this.input)
   }
-  private createInput(): HTMLInputElement{
-    const input:HTMLInputElement = document.createElement("input");
-    input.type="text";
-    input.placeholder=this.options.placeHolderText;
-    return input;
+  private setupFormField(){
+    const top:HTMLElement = document.createElement("div"); 
+    top.className='emails-input__top';
+    top.append(this.createHeader())
+    this.createInput();
+    top.append(this.body)
+    this.el.append(top)
+  } 
+  private createHeader(): HTMLElement{
+    const header:HTMLElement = document.createElement("div"); 
+    header.innerHTML=this.options.headerLabel;
+    header.className='emails-input__header';
+    return header; 
+  }
+  private createInput(){
+    this.body = document.createElement("div"); 
+    this.body.className='emails-input__body';    
+    this.input = document.createElement("input");
+    this.input.type="text";
+    this.input.placeholder=this.options.placeHolderText;
+    this.body.append(this.input)
   }
   private handleEvents(){
     this.input.addEventListener('blur',(e)=>{
@@ -63,7 +82,7 @@ export class EmailsInput{
       console.log(this.addresses);
     })
     addressSpan.append(del);
-    this.el.insertBefore(addressSpan,this.input);
+    this.body.insertBefore(addressSpan,this.input);
     this.addresses.push(value);
     console.log(this.addresses);
   }

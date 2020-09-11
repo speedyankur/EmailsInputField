@@ -1,23 +1,59 @@
 h1, h2 {
   font-family: Lato;
 }
+body{
+  background: green;
+}
 input {
   border :none;
 }
-span{
+.emails-input{
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);  
+}
+.emails-input__header{
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 27px;
+  color: #050038;
+  margin-bottom: 20px;
+}
+.emails-input__top{
+  background: #F8F8F7;
+  padding: 20px;
+}
+.emails-input__body{
+  height:75px;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 1px solid #C3C2CF;
+  box-sizing: border-box;
+  border-radius: 4px;  
+  padding:5px;
+  font-size: 14px;
+  line-height: 24px;  
+}
+.emails-input__body input:focus, .emails-input__body input:focus{
+    outline: none;
+}
+.emails-input__body span{
   display: inline-block;
   background: rgba(102, 153, 255, 0.2);
   border-radius: 100px;
-  padding:3px 10px;
-  margin:0 3px;  
+  padding:0px 3px;
+  margin:0 3px; 
+     
 }
-span.invalid{
+.emails-input__body span.invalid{
   border-bottom: 1px dashed #D92929;
   background:none;
   border-radius:0;
   padding:3px 5px;
   margin:0 3px;  
 }
-span i{
+.emails-input__body span i{
   cursor: pointer
 }
