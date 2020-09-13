@@ -46,7 +46,7 @@ export class EmailsInput {
   private input: HTMLInputElement;
   private body: HTMLElement;
   private addressesBook: AddressBook = new AddressBook();
-  private defaultOptions: Options = {
+  defaultOptions: Options = {
     delimiter: ",",
     headerLabel: "Share Board name with others",
     placeHolderText: "add emails..",
