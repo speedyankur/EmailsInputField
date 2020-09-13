@@ -1,5 +1,5 @@
 export interface Options {
-  delimiter?: char;
+  delimiter?: string;
   headerLabel?: string;
   placeHolderText?: string;
   addEmailsLabel?: string;
@@ -110,7 +110,6 @@ export class EmailsInput {
   }
   private handleEvents() {
     this.body.addEventListener("click", e => {
-      console.log("handling body click events");
       this.input.focus();
     });
     this.input.addEventListener("blur", e => {

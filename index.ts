@@ -13,6 +13,6 @@ const options: Options ={
   addEmailsLabel: "+ email",
   countEmailsLabel: "total emails?",
 }
-var emailsInput1 = new EmailsInput(el, options);
+var emailsInput1 = new EmailsInput(el1, options);
 
 
