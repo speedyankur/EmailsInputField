@@ -132,7 +132,7 @@ export class EmailsInput {
     });
     this.input.addEventListener("paste", e => {
       e.preventDefault();
-      const paste: string = (e.clipboardData || window.clipboardData).getData(
+      const paste: string = (e.clipboardData || window['clipboardData']).getData(
         "text"
       );
       const addresses = paste.split(this.options.delimiter);
